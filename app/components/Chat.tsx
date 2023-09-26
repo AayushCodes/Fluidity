@@ -91,7 +91,6 @@ interface ChatProps {
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState<ChatProps[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setChats([
@@ -113,7 +112,7 @@ const Chat = () => {
       },
       {
         is_user: true,
-        text: 'Lets do this! ihufdoo;voefbveo;vbeof;vboebvbveab',
+        text: 'Lets do this!',
       },
     ]);
   }, []);
@@ -142,11 +141,13 @@ const Chat = () => {
     );
   });
 
+  //bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-neutral-700
+
   return (
-    <div className='text-white h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-neutral-700 p-2 rounded-xl'>
+    <div className='flex-grow text-white h-full p-2 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-neutral-700 rounded-lg'>
       <div className='flex flex-col h-full'>
-        <div className='mb-4 p-3 font-mono text-center text-3xl'>
-          Super Chat
+        <div className='mb-8 pl-2 font-dela text-left text-5xl '>
+          StreamChat
         </div>
         <div className='overflow-auto flex-col h-full'>
           <div className='font-sans'>{displayChats}</div>

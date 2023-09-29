@@ -144,9 +144,9 @@ const Chat = () => {
   //bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-neutral-700
 
   return (
-    <div className='flex-grow text-white h-full p-2 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-neutral-700 rounded-lg'>
+    <div className='text-white h-full p-2'>
       <div className='flex flex-col h-full'>
-        <div className='mb-8 pl-2 font-dela text-left text-5xl '>
+        <div className='mb-6 pl-2 font-sans text-left text-4xl '>
           StreamChat
         </div>
         <div className='overflow-auto flex-col h-full'>
@@ -160,7 +160,10 @@ const Chat = () => {
             value={message}
             onChange={handleChange}
           />
-          <button className='text-3xl p-2 text-white' onClick={handleSend}>
+          <button
+            className='text-3xl p-2 text-white hover:text-violet-600'
+            onClick={handleSend}
+          >
             <BiSend />
           </button>
         </div>

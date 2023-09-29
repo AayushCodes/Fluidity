@@ -111,9 +111,9 @@ const UserStreams = () => {
   return (
     <div className='text-white h-full rounded-lg'>
       <div className='flex flex-col h-full'>
-        <div className='mb-4 font-sans text-center text-3xl'>Assests</div>
+        <div className='mb-3 font-sans text-center text-2xl'>Assests</div>
         <div className='overflow-auto flex-col h-full'>
-          <div className='font-sans text-lg'>{displayStreams}</div>
+          <div className='font-sans text-md'>{displayStreams}</div>
         </div>
       </div>
     </div>

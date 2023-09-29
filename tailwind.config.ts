@@ -15,6 +15,8 @@ const config: Config = {
       },
       fontFamily: {
         dela: ['Dela Gothic One'],
+        mm: ['Martian Mono', 'monospace'],
+        roboto_slab: ['Roboto Slab', 'serif'],
       },
     },
   },

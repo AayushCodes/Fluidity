@@ -6,7 +6,7 @@ function Navbar() {
     <div>
       <Box display='flex' bg='slate.900' p={4} justifyContent='space-between'>
         <div>
-          <Heading color='white' className='font-dela font-thin'>
+          <Heading color='white' className='font-roboto_slab'>
             StreamChat
           </Heading>
           {/* <Text fontSize='sm' fontFamily='sans-serif' color='white'>

@@ -146,8 +146,8 @@ const Chat = () => {
   return (
     <div className='text-white h-full p-2'>
       <div className='flex flex-col h-full'>
-        <div className='mb-6 pl-2 font-sans text-left text-4xl '>
-          StreamChat
+        <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
+          Alfred
         </div>
         <div className='overflow-auto flex-col h-full'>
           <div className='font-sans'>{displayChats}</div>
@@ -161,7 +161,7 @@ const Chat = () => {
             onChange={handleChange}
           />
           <button
-            className='text-3xl p-2 text-white hover:text-violet-600'
+            className='text-3xl p-2 text-white hover:text-purple-400'
             onClick={handleSend}
           >
             <BiSend />

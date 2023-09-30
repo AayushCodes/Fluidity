@@ -17,7 +17,7 @@ function Navbar() {
           <Button
             size='md'
             variant='unstyled'
-            className='bg-violet-600 text-white p-3 flex items-center hover:bg-transparent hover:text-violet-600 border-2 border-violet-600 rounded-xl'
+            className='hover:bg-violet-600 hover:text-white p-3 flex items-center bg-transparent text-violet-600 border-2 border-violet-600 rounded-xl'
           >
             Connect Wallet
           </Button>

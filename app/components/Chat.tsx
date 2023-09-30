@@ -126,14 +126,16 @@ const Chat = () => {
     setMessage(event.target.value);
   }
 
+  // bg-gradient-to-tl from-blue-600 to-violet-600
+  // bg-gradient-to-tr from-cyan-500 to-blue-500
   const displayChats = chats.map((chat: any) => {
     return (
       <div
         key={nanoid()}
         className={`${
           chat.is_user
-            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-gradient-to-tl from-blue-600 to-violet-600 mb-2 mt-6 rounded-xl'
-            : 'w-fit py-2 px-4 break-normal max-w-sm shadow-md text-lg bg-gradient-to-tr from-cyan-500 to-blue-500 mb-1 ml-2 rounded-xl'
+            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-[#0EA5E9] mb-2 mt-6 rounded-xl'
+            : 'w-fit py-2 px-4 break-normal max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
         }`}
       >
         {chat.text}

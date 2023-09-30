@@ -5,84 +5,11 @@ import { nanoid } from 'nanoid';
 import useChatScroll from './ChatScroll';
 import { useState, useEffect, useRef } from 'react';
 import { BiSend } from 'react-icons/bi';
-
-const Manualchats = [
-  <>
-    <div className='w-fit py-2 px-3 break-normal max-w-xs shadow-md text-md bg-gray-800 mb-1 ml-2 rounded-xl'>
-      Greetings. Cosmic Explorer.
-    </div>
-    <div className='w-fit py-2 px-3 break-normal max-w-xs shadow-md text-md bg-gray-800 mb-1 ml-2 rounded-xl'>
-      I'm Stella.
-    </div>
-    <div className='w-fit py-2 px-3 break-normal max-w-xs shadow-md text-md bg-gray-800 mb-1 ml-2 rounded-xl'>
-      You're about to embark on an enchanting journey through the Solana Galaxy.
-      <br />
-      <br />
-      With wonders of Jupiter, you'll experience the future of finance!
-    </div>
-    <div className='w-fit py-2 px-3 break-normal max-w-xs shadow-md text-md bg-gray-800 mb-6 ml-2 rounded-xl'>
-      You ready for this adventure?
-    </div>
-    <div className='ml-auto mr-2 text-md break-normal shadow-md max-w-sm w-fit py-2 px-3 bg-slate-600 mb-4 rounded-xl'>
-      Lets do this!
-    </div>
-    {/* <div className='w-fit break-normal max-w-xl shadow-lg shadow-[#64CCC533] p-3 text-lg bg-[#64CCC5] mb-4 rounded-xl'>
-      In nunc velit, dapibus non mauris a, commodo semper lorem. Sed malesuada
-      sagittis felis eu lobortis. Vivamus interdum tempus ex, vitae congue ipsum
-      convallis sodales. Vestibulum ante ipsum primis in faucibus orci luctus et
-      ultrices posuere cubilia curae; Sed vel purus vel orci dictum tempor.
-      Etiam fringilla porta elit ac hendrerit. In aliquet, elit a sollicitudin
-      tincidunt, est velit molestie tortor, non mattis leo velit in risus.
-    </div>
-    <div className='ml-auto w-fit text-lg break-normal shadow-lg shadow-[#176B8733] max-w-xl p-3 bg-[#176B87] mb-4 rounded-xl'>
-      Praesent pellentesque tristique ultrices. Suspendisse quis urna a metus
-      placerat lacinia sed ac lacus. Aenean eleifend tincidunt ante in sagittis.
-      Nullam dapibus arcu a enim luctus, in interdum dui molestie.
-    </div>
-    <div className='w-fit p-3 bg-[#64CCC5] shadow-lg shadow-[#64CCC533] break-normal max-w-xl text-lg mb-4 rounded-xl'>
-      Quisque aliquet orci odio, eu efficitur nunc interdum in. Aenean sem arcu,
-      feugiat id aliquet rutrum, imperdiet vitae lorem. Duis sed euismod erat.
-      Aliquam tristique ullamcorper dictum. In mollis dolor et nibh feugiat
-      convallis. Aenean at feugiat augue, vitae ultrices.
-    </div>
-    <div className='ml-auto w-fit break-normal max-w-xl shadow-lg shadow-[#176B8733] p-3 bg-[#176B87] text-lg mb-4 rounded-xl'>
-      Aliquam erat volutpat. In et consequat ligula, in finibus nisl. Donec at
-      condimentum velit. Donec ac consectetur dolor, vitae pharetra tortor. Sed
-      et venenatis ipsum, ut auctor justo. Nulla nec varius odio. Curabitur
-      eleifend eget arcu et ultrices. Cras hendrerit.
-    </div>
-    <div className='w-fit p-3 bg-[#64CCC5] shadow-lg shadow-[#64CCC533] break-normal max-w-xl text-lg mb-4 rounded-xl'>
-      Ut mattis pretium augue in venenatis. Nunc et nunc ut metus fermentum
-      tempus. Sed at eros eu felis maximus hendrerit.
-    </div>
-    <div className='ml-auto w-fit break-normal max-w-xl shadow-lg shadow-[#176B8733] p-3 bg-[#176B87] text-lg mb-4 rounded-xl'>
-      Maecenas viverra interdum laoreet. Morbi tellus nisi, pulvinar nec
-      egestas.
-    </div>
-    <div className='w-fit p-3 bg-[#64CCC5] shadow-lg shadow-[#64CCC533] break-normal max-w-xl text-lg mb-4 rounded-xl'>
-      Curabitur ut erat ac velit ultrices mattis. Fusce vel elementum nunc.
-      Vestibulum mi enim, elementum quis leo eu, bibendum efficitur risus.
-      Suspendisse luctus imperdiet purus, vitae dapibus velit malesuada dictum.
-      Mauris suscipit viverra massa, at pellentesque augue feugiat eget. Ut
-      consectetur nunc vitae massa tempus, eget mollis ex lobortis. Vivamus a
-      congue est, ut vulputate velit. Nam pellentesque vestibulum purus nec
-      tristique. In accumsan dui vel dui tempus dictum. Nulla sit amet elementum
-      lacus. Sed leo mauris, molestie ac urna sed, efficitur sollicitudin massa.
-      Donec interdum egestas iaculis.
-    </div> */}
-  </>,
-];
-
-// {
-//   loading ? (
-//     <div className='justify-center h-3/5 items-center flex'>
-//       {/* <ReactLoading type='spin' color='white' /> */}
-//       loading...
-//     </div>
-//   ) : (
-//     <div className='font-sans'>{Manualchats}</div>
-//   );
-// }
+import { systemPrompt, systemFunctions } from '../constants';
+import { useAccount } from 'wagmi';
+import { startStream, deleteStream, updateStream, init } from '../utils';
+import OpenAI from 'openai';
+require('dotenv').config();
 
 interface ChatProps {
   is_user: boolean;
@@ -94,35 +21,145 @@ const Chat = () => {
   const [chats, setChats] = useState<ChatProps[]>([]);
   const ref = useChatScroll(chats);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [messages, setMessages] = useState<any[]>([
+    { role: 'system', content: systemPrompt },
+  ]);
+  const { address, isConnected } = useAccount();
+  const [auth, setAuth] = useState<any>();
+  const [initiated, setInitiated] = useState<any>();
+  const [chain, setChain] = useState<Boolean>(false);
+
+  const openai = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
+  });
 
   useEffect(() => {
     setChats([
       {
         is_user: false,
-        text: 'Greetings. Cosmic Explorer.',
+        text: 'Greetings, fellow streamer.',
       },
       {
         is_user: false,
-        text: "I'm Stella.",
+        text: "Ask me anything about streaming, or if your bags are jingling, get to managing some streams",
       },
       {
         is_user: false,
-        text: "You're about to embark on an enchanting journey through the Solana Galaxy.\n\nWith wonders of Jupiter, you'll experience the future of finance!",
-      },
-      {
-        is_user: false,
-        text: 'You ready for this adventure?',
-      },
-      {
-        is_user: true,
-        text: 'Lets do this!',
+        text: 'All you gotta do is ask ;)',
       },
     ]);
   }, []);
 
+  useEffect(() => {
+    if (auth) {
+      (async function () {
+        const chainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });
+        console.log(chainId);
+        if (chainId == '0x14a33') {
+          setChain(true);
+          setInitiated(await init());
+        } else {
+          setChain(false);
+        }
+      })();
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    setAuth(isConnected);
+  }, [isConnected]);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
+
+  async function sendPrompt() {
+    console.log(message);
+    const newMess = [...messages, { role: 'user', content: message }];
+    // setMessages((prevMessages) => [...prevMessages, { role: "user", content: message }]);
+    setMessages(newMess);
+    try {
+      console.log(messages);
+      const chatCompletion: any = await openai.chat.completions.create({
+        messages: newMess,
+        model: 'gpt-3.5-turbo-0613',
+        functions: systemFunctions,
+      });
+      console.log(chatCompletion.choices);
+      console.log(chatCompletion.choices[0].message.content);
+      if (chatCompletion.choices[0].finish_reason == 'function_call') {
+        const functionObject = JSON.parse(
+          chatCompletion.choices[0].message.function_call.arguments
+        );
+        console.log(typeof functionObject);
+        console.log(functionObject);
+        console.log(chatCompletion.choices[0].message.function_call.name);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            role: 'system',
+            content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function`,
+          },
+        ]);
+        setChats((prevChats) => [
+          ...prevChats,
+          {
+            is_user: false,
+            text: `Calling ${chatCompletion.choices[0].message.function_call.name}`,
+          },
+        ]);
+        // messages.push({
+        //   role: "system",
+        //   content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function` ,
+        // });
+        if (
+          chatCompletion.choices[0].message.function_call.name == 'startStream'
+        ) {
+          startStream(
+            initiated,
+            functionObject.address,
+            functionObject.amountPerMonth,
+            functionObject.token
+          );
+        } else if (
+          chatCompletion.choices[0].message.function_call.name == 'deleteStream'
+        ) {
+          deleteStream(initiated, functionObject.address, functionObject.token);
+        }
+      } else {
+        console.log(chatCompletion);
+        console.log(chatCompletion.choices[0].message.content);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            role: 'assistant',
+            content: chatCompletion.choices[0].message.content,
+          },
+        ]);
+        setChats((prevChats) => [
+          ...prevChats,
+          {
+            is_user: false,
+            text: chatCompletion.choices[0].message.content,
+          },
+        ]);
+        // messages.push({
+        //   role: "assistant",
+        //   content: chatCompletion.choices[0].message.content,
+        // });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async function handleSend() {
-    setChats((prevChats) => [...prevChats, { is_user: true, text: message }]);
     setMessage('');
+    setChats((prevChats) => [...prevChats, { is_user: true, text: message }]);
+    await sendPrompt();
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -157,9 +194,9 @@ const Chat = () => {
   return (
     <div className='text-white h-full p-2'>
       <div className='flex flex-col h-full'>
-        <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
+        {/* <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
           Alfred
-        </div>
+        </div> */}
         <div ref={ref} className='overflow-auto flex-col h-full'>
           <div className='font-sans'>{displayChats}</div>
         </div>

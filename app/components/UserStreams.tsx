@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-key */
 'use client';
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { init } from '../utils';
 import {
   Popover,
   PopoverTrigger,
@@ -14,104 +17,124 @@ import {
   Divider,
 } from '@chakra-ui/react';
 
-const streams = [
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-  {
-    assest: 'fDAIx',
-    balance: '12889.8',
-    sr: '0x7637r8..683',
-    IOF: '+5/mon',
-  },
-];
-
-{
-  /* <Popover>
-  <PopoverTrigger>
-    <Button>Trigger</Button>
-  </PopoverTrigger>
-  <PopoverContent>
-    <PopoverArrow />
-    <PopoverCloseButton />
-    <PopoverHeader>Confirmation!</PopoverHeader>
-    <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
-  </PopoverContent>
-</Popover>; */
-}
-
-const displayStreams = streams.map((stream, index) => (
-  <>
-    <div key={index} className='flex gap-8 p-2 justify-around m-1 rounded-lg'>
-      <div>{stream.assest}</div>
-      <Popover>
-        <PopoverTrigger>
-          <div className='hover:text-purple-400 hover:cursor-pointer'>
-            {stream.IOF}
-          </div>
-        </PopoverTrigger>
-        <PopoverContent className='bg-black text-sm'>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverHeader>Sender/Receiver</PopoverHeader>
-          <PopoverBody>
-            <div>{stream.sr}</div>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-
-      <div>{stream.balance}</div>
-    </div>
-    {streams.length - 1 === index ? null : (
-      <Divider orientation='horizontal' size='lg' colorScheme='gray' />
-    )}
-  </>
-));
-
 const UserStreams = () => {
+  const [initiated, setInitiated] = useState<any>();
+  const [inflow, setInflow] = useState([]);
+  const [outflow, setOutflow] = useState([]);
+  const { address, isConnected } = useAccount();
+  const [auth, setAuth] = useState<any>();
+  const [chain, setChain] = useState<any>();
+  const [streams, setStreams] = useState<any>([])
+  useEffect(() => {
+    setAuth(isConnected);
+  }, [isConnected]);
+
+  useEffect(() => {
+    if (auth) {
+      (async function () {
+        const chainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });
+        if (chainId == '0x14a33') {
+          setChain(true);
+          setInitiated(await init());
+        } else {
+          setChain(false);
+        }
+      })();
+    }
+  }, [auth]);
+  const streamData = async (type: any, address: any) => {
+    const checkStream = (stream: any) => {
+      return stream.currentFlowRate != 0;
+    };
+
+    const query = `
+    {
+      streams(where: {${type}: "${address.toLowerCase()}"}) {
+        currentFlowRate
+        token {
+          symbol
+        }
+        sender {
+          id
+        }
+        receiver {
+          id
+        }
+      }
+    }
+`;
+    const data = await (
+      await fetch(
+        'https://base-goerli.subgraph.x.superfluid.dev/',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: query,
+          }),
+        }
+      )
+    ).json();
+    console.log(data.data.streams.filter(checkStream));
+    return data.data.streams.filter(checkStream);
+  };
+  useEffect(() => {
+    (async () => {
+      if (initiated) {
+        const address = initiated[3];
+        console.log(address);
+        const outflows = await streamData('sender', address)
+        const inflows = await streamData('receiver', address)
+        // setOutflow(await streamData('sender', address));
+        // setInflow(await streamData('receiver', address));
+        console.log(inflows)
+        console.log(outflows)
+        setStreams([...inflows, ...outflows])
+      }
+    })();
+  }, [initiated]);
+
+  // console.log(outflow)
+  // console.log(inflow)
+  console.log(streams)
+  const displayStreams = streams.map((stream: any, index: any) => (
+    <>
+      <div key={index} className='flex gap-8 p-2 justify-around m-1 rounded-lg'>
+        <div>{stream.token.symbol}</div>
+        {/* <div className='hover:text-purple-400 hover:cursor-pointer'> */}
+        <div>
+          {stream.sender.id == address ? "-" : "+"}
+        {Math.round((stream.currentFlowRate * 30 * 24 * 60 * 60) / 1e16)/100}/mo
+            </div>
+        {/* <Popover>
+          <PopoverTrigger>
+            <div className='hover:text-purple-400 hover:cursor-pointer'>
+              {stream.IOF}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className='bg-black text-sm'>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>Sender/Receiver</PopoverHeader>
+            <PopoverBody>
+              <div>{stream.sr}</div>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover> */}
+  
+        <div>{stream.balance}</div>
+      </div>
+      {streams.length - 1 === index ? null : (
+        <Divider orientation='horizontal' size='lg' colorScheme='gray' />
+      )}
+    </>
+  ));
   return (
     <div className='text-white h-full rounded-lg'>
       <div className='flex flex-col h-full'>
-        <div className='mb-3 font-sans text-center text-2xl'>Assests</div>
+        <div className='mb-3 font-sans text-center text-2xl'>Your Streams</div>
         <div className='overflow-auto flex-col h-full'>
           <div className='font-sans text-md'>{displayStreams}</div>
         </div>

@@ -1,4 +1,3 @@
-// import star from '../public/star.jpeg;';
 import Navbar from './components/Navbar';
 import Chat from './components/Chat';
 import UserStreams from './components/UserStreams';

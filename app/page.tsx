@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <main className='bg-black h-screen'>
       <Navbar />
-      <div className='h-[calc(100vh-88px)] flex mt-3'>
-        <div className='flex h-full w-1/4 justify-center'>
-          <div className='mt-2 mx-3 w-full'>
+      <div className='h-[calc(100vh-112px)] flex mt-3'>
+        <div className='flex h-full w-1/4 justify-center items-center'>
+          <div className='mt-2 mx-3 ml-8 w-full'>
             <LeftPanel />
           </div>
         </div>

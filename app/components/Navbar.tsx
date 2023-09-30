@@ -1,13 +1,16 @@
 'use client';
 import React from 'react';
 import { Box, Heading, Button, Text, Image } from '@chakra-ui/react';
-import {ConnectBtn} from "../components/customButton"
+import { ConnectBtn } from '../components/customButton';
+// import Image from 'next/image';
+// import logo from '../public/favicon.png';
 function Navbar() {
   return (
     <div>
       <Box display='flex' bg='slate.900' p={4} justifyContent='space-between'>
+        {/* <div className='flex'> */}
+        {/* <Image src={'favicon.png'} alt='logos' sizes='sm' /> */}
         <div>
-        <Image src={'favicon.png'} alt={'logo'} />
           <Heading color='white' className='font-roboto_slab'>
             Fluidity
           </Heading>
@@ -15,6 +18,7 @@ function Navbar() {
             Your Personal Streaming Assistant
           </Text>
         </div>
+        {/* </div> */}
         <div className='flex items-center'>
           {/* <Button
             size='md'

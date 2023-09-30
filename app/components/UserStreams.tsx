@@ -124,7 +124,7 @@ const UserStreams = () => {
           </PopoverContent>
         </Popover> */}
   
-        <div>{stream.balance}</div>
+        <div>{stream.sender.id.substring(0,4)}...{stream.sender.id.substring(38)}</div>
       </div>
       {streams.length - 1 === index ? null : (
         <Divider orientation='horizontal' size='lg' colorScheme='gray' />

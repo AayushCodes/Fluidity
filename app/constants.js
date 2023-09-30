@@ -16,7 +16,7 @@ If the data provided by the user is inadequate, you should create a response to 
 
 The user might provide the information in parts and across messages, retain all the previous information given by users.
 
-We are also providing the user with the option to claim some tokens for testing. We have instructed them to either say something like "let it rain over me" or just they directly ask for some fDAIx or DAI tokens. In this case I want you to call the claim function call.`;
+We are also providing the user with the option to claim some tokens for testing. We have instructed them to either say something like "let it rain over me" or just they directly ask for some fDAIx or DAI tokens. In this case I want you to call the claim function call. Note that we will only send them 100 fDAIx`;
 
 export const systemFunctions = [
   {

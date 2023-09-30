@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import { BiSend } from 'react-icons/bi';
 import { systemPrompt, systemFunctions } from '../constants';
 import { useAccount } from 'wagmi';
-import { startStream, deleteStream, updateStream, init } from '../utils';
+import { startStream, deleteStream, updateStream, init, claim } from '../utils';
 import OpenAI from 'openai';
 require('dotenv').config();
 
@@ -134,33 +134,61 @@ const Chat = () => {
         } else if (
           chatCompletion.choices[0].message.function_call.name == 'deleteStream'
         ) {
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Approve Transaction in your wallet...`,
+            },
+          ]);
           await deleteStream(
             initiated,
             functionObject.address,
             functionObject.token
           );
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Congratulations, you just deleted a ${functionObject.token} stream to ${functionObject.address}`,
+            },
+          ]);
+        } else if (
+          chatCompletion.choices[0].message.function_call.name == 'claim'
+        ) {
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Approve Transaction in your wallet...`,
+            },
+          ]);
+          await claim(initiated);
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Raining some DAI on you`,
+            },
+          ]);
+        } else {
+          console.log(chatCompletion);
+          console.log(chatCompletion.choices[0].message.content);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              role: 'assistant',
+              content: chatCompletion.choices[0].message.content,
+            },
+          ]);
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: chatCompletion.choices[0].message.content,
+            },
+          ]);
         }
-      } else {
-        console.log(chatCompletion);
-        console.log(chatCompletion.choices[0].message.content);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            role: 'assistant',
-            content: chatCompletion.choices[0].message.content,
-          },
-        ]);
-        setChats((prevChats) => [
-          ...prevChats,
-          {
-            is_user: false,
-            text: chatCompletion.choices[0].message.content,
-          },
-        ]);
-        // messages.push({
-        //   role: "assistant",
-        //   content: chatCompletion.choices[0].message.content,
-        // });
       }
     } catch (e) {
       console.log(e);

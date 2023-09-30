@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { Framework } from "@superfluid-finance/sdk-core";
+import abi from "../faucet_abi.json"
 
 function calculateFlow(amountInGWeiPerMonth) {
   if (
@@ -155,4 +156,14 @@ export async function init() {
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function claim(initiated) {
+  const signer = initiated[2];
+  const provider = initiated[4];
+  const contract = new ethers.Contract("0x36a5C3EAC1C555Cbd4f04780f6bd8E978AE75631", abi.abi, signer);
+  const result = await contract.requestTokens();
+  console.log(result);
+  await provider.waitForTransaction(result.hash);
+  console.log("claimed");
 }

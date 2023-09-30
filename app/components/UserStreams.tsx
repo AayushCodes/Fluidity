@@ -102,7 +102,7 @@ const UserStreams = () => {
         <div>{stream.token.symbol}</div>
         {/* <div className='hover:text-purple-400 hover:cursor-pointer'> */}
         <div>
-          {stream.sender.id == address ? '-' : '+'}
+          {stream?.sender?.id == address?.toString() ? '-' : '+'}
           {Math.round((stream.currentFlowRate * 30 * 24 * 60 * 60) / 1e16) /
             100}
           /mo

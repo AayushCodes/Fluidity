@@ -42,7 +42,7 @@ const Chat = () => {
       },
       {
         is_user: false,
-        text: 'Ask me anything about streaming, or if your bags are jingling, get to managing some streams',
+        text: 'I can tell you anything about streaming, or if your bags are jingling, get to managing some streams',
       },
       {
         is_user: false,

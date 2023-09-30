@@ -1,8 +1,11 @@
+"use client"
 import Navbar from './components/Navbar';
 import Chat from './components/Chat';
 import UserStreams from './components/UserStreams';
 import LeftPanel from './components/LeftPanel';
+import { useAccount } from 'wagmi';
 export default function Home() {
+  const {address, isConnected} = useAccount();
   return (
     <main className='bg-black h-screen'>
       <Navbar />
@@ -19,7 +22,7 @@ export default function Home() {
         </div>
         <div className='flex flex-grow h-full w-1/4 justify-center'>
           <div className='mt-8 mx-3 mr-8 w-full'>
-            <UserStreams />
+            {isConnected ? <UserStreams /> : ""}
           </div>
         </div>
       </div>

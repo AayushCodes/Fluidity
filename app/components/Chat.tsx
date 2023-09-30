@@ -46,6 +46,7 @@ const Chat = () => {
       },
       {
         is_user: false,
+
         text: 'All you gotta do is ask ;)',
       },
     ]);

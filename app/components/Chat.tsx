@@ -2,7 +2,8 @@
 'use client';
 import React from 'react';
 import { nanoid } from 'nanoid';
-import { useState, useEffect } from 'react';
+import useChatScroll from './ChatScroll';
+import { useState, useEffect, useRef } from 'react';
 import { BiSend } from 'react-icons/bi';
 
 const Manualchats = [
@@ -91,6 +92,8 @@ interface ChatProps {
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState<ChatProps[]>([]);
+  const ref = useChatScroll(chats);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setChats([
@@ -122,6 +125,12 @@ const Chat = () => {
     setMessage('');
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      buttonRef.current?.click();
+    }
+  };
+
   function handleChange(event: any) {
     setMessage(event.target.value);
   }
@@ -151,7 +160,7 @@ const Chat = () => {
         <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
           Alfred
         </div>
-        <div className='overflow-auto flex-col h-full'>
+        <div ref={ref} className='overflow-auto flex-col h-full'>
           <div className='font-sans'>{displayChats}</div>
         </div>
         <div className='flex py-2 pl-2'>
@@ -161,8 +170,10 @@ const Chat = () => {
             className='p-2 rounded-xl w-full bg-slate-600'
             value={message}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
           <button
+            ref={buttonRef}
             className='text-3xl p-2 text-white hover:text-purple-400'
             onClick={handleSend}
           >

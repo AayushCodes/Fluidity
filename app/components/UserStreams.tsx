@@ -98,7 +98,7 @@ const UserStreams = () => {
   console.log(streams);
   const displayStreams = streams.map((stream: any, index: any) => (
     <>
-      <div key={index} className='flex gap-8 p-2 justify-around m-1 rounded-lg'>
+      <div key={index} className='flex py-2 justify-between my-1 rounded-lg'>
         <div>{stream.token.symbol}</div>
         {/* <div className='hover:text-purple-400 hover:cursor-pointer'> */}
         <div>
@@ -135,14 +135,15 @@ const UserStreams = () => {
   return (
     <div className='text-white h-full rounded-lg'>
       <div className='flex flex-col h-full'>
-        <div className='mb-3 font-mono text-left font-semibold text-2xl'>
+        <div className='mb-2 font-mono text-left font-semibold text-2xl'>
           My Streams
         </div>
-        <div className='flex gap-8 p-2 justify-around rounded-lg'>
+        <div className='flex justify-between mb-2 font-mono font-semibold'>
           <span>Asset</span>
-          <span>Amount</span>
+          <span className='mr-4'>Amount</span>
           <span>Address</span>
         </div>
+        <Divider orientation='horizontal' size='lg' colorScheme='gray' />
         <div className='overflow-auto flex-col h-full'>
           <div className='font-sans text-md'>{displayStreams}</div>
         </div>

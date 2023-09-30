@@ -107,7 +107,7 @@ const Chat = () => {
       },
       {
         is_user: false,
-        text: "You're about to embark on an enchanting journey through the Solana Galaxy.\n\nWith wonders of Jupiter, you'll experience the future of finance!",
+        text: "You're about to embark on an enchanting journey through the Solana Galaxy.With wonders of Jupiter, you'll experience the future of finance!",
       },
       {
         is_user: false,
@@ -143,7 +143,7 @@ const Chat = () => {
         key={nanoid()}
         className={`${
           chat.is_user
-            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-2 mt-6 rounded-xl'
+            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mt-6 mb-6 rounded-xl'
             : 'w-fit py-2 px-4 break-normal max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
         }`}
       >

@@ -42,7 +42,7 @@ const Chat = () => {
       },
       {
         is_user: false,
-        text: 'Ask me anything about streaming, or if your bags are jingling, get to managing some streams',
+        text: 'I can tell you anything about streaming, or if your bags are jingling, get to managing some streams',
       },
       {
         is_user: false,
@@ -221,11 +221,13 @@ const Chat = () => {
             value={message}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            disabled={!isConnected}
           />
           <button
             ref={buttonRef}
             className='text-3xl p-2 text-white hover:text-purple-400'
             onClick={handleSend}
+            disabled={!isConnected}
           >
             <BiSend />
           </button>

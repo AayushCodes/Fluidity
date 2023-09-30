@@ -42,7 +42,7 @@ const Chat = () => {
       },
       {
         is_user: false,
-        text: "Ask me anything about streaming, or if your bags are jingling, get to managing some streams",
+        text: 'Ask me anything about streaming, or if your bags are jingling, get to managing some streams',
       },
       {
         is_user: false,
@@ -180,7 +180,7 @@ const Chat = () => {
         key={nanoid()}
         className={`${
           chat.is_user
-            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-2 mt-6 rounded-xl'
+            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-6 mt-6 rounded-xl'
             : 'w-fit py-2 px-4 break-normal max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
         }`}
       >
@@ -194,9 +194,9 @@ const Chat = () => {
   return (
     <div className='text-white h-full p-2'>
       <div className='flex flex-col h-full'>
-        {/* <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
-          Alfred
-        </div> */}
+        <div className='mb-6 pl-2 font-roboto_slab text-left text-3xl '>
+          StreamChat
+        </div>
         <div ref={ref} className='overflow-auto flex-col h-full'>
           <div className='font-sans'>{displayChats}</div>
         </div>

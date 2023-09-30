@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { Button } from '@chakra-ui/react';
 export const ConnectBtn = () => {
   return (
     <ConnectButton.Custom>
@@ -16,13 +18,12 @@ export const ConnectBtn = () => {
           ready &&
           account &&
           chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === 'authenticated');
         return (
           <div
             {...(!ready && {
               'aria-hidden': true,
-              'style': {
+              style: {
                 opacity: 0,
                 pointerEvents: 'none',
                 userSelect: 'none',
@@ -32,14 +33,19 @@ export const ConnectBtn = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button onClick={openConnectModal} type="button">
+                  <Button
+                    onClick={openConnectModal}
+                    size='md'
+                    variant='unstyled'
+                    className='hover:bg-violet-600 hover:text-white p-3 flex items-center bg-transparent text-violet-600 border-2 border-violet-600 rounded-xl'
+                  >
                     Connect Wallet
-                  </button>
+                  </Button>
                 );
               }
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type="button">
+                  <button onClick={openChainModal} type='button'>
                     Wrong network
                   </button>
                 );
@@ -47,9 +53,10 @@ export const ConnectBtn = () => {
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
+                    className='text-white p-1.5 rounded-2xl border-2 border-violet-600 flex items-center'
                     onClick={openChainModal}
                     style={{ display: 'flex', alignItems: 'center' }}
-                    type="button"
+                    type='button'
                   >
                     {chain.hasIcon && (
                       <div
@@ -73,7 +80,11 @@ export const ConnectBtn = () => {
                     )}
                     {chain.name}
                   </button>
-                  <button onClick={openAccountModal} type="button">
+                  <button
+                    className='text-white p-1.5 rounded-2xl border-2 border-violet-600 flex items-center'
+                    onClick={openAccountModal}
+                    type='button'
+                  >
                     {account.displayName}
                     {account.displayBalance
                       ? ` (${account.displayBalance})`

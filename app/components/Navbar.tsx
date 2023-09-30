@@ -7,10 +7,10 @@ import { ConnectBtn } from '../components/customButton';
 function Navbar() {
   return (
     <div>
-      <Box display='flex' bg='slate.900' p={4} justifyContent='space-between'>
+      <Box display='flex' bg='slate.900' p={4} justifyContent='space-between' justifyItems='center'>
         {/* <div className='flex'> */}
         {/* <Image src={'favicon.png'} alt='logos' sizes='sm' /> */}
-        <div>
+        <div className='ml-3'>
           <Heading color='white' className='font-roboto_slab'>
             Fluidity
           </Heading>

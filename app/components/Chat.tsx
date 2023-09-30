@@ -191,9 +191,9 @@ const Chat = () => {
         key={nanoid()}
         className={`${
           chat.is_user
-            // ? 'ml-auto mr-2 text-lg break-words shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-6 mt-6 rounded-xl'
-            // : 'w-fit py-2 px-4 break-words max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
-            ? 'ml-auto mr-2 text-lg break-words shadow-md max-w-md w-fit py-2 px-4 mb-6 mt-6 border-cyan-600 border-2 rounded-xl border-dashed'
+            ? // ? 'ml-auto mr-2 text-lg break-words shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-6 mt-6 rounded-xl'
+              // : 'w-fit py-2 px-4 break-words max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
+              'ml-auto mr-2 text-lg break-words shadow-md max-w-md w-fit py-2 px-4 mb-6 mt-6 border-cyan-600 border-2 rounded-xl border-dashed'
             : 'w-fit py-2 px-4 break-words max-w-sm shadow-md text-lg mb-1 ml-2 rounded-xl border-dashed border-2	border-[#7C3AED]'
         }`}
       >
@@ -221,11 +221,13 @@ const Chat = () => {
             value={message}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            disabled={!isConnected}
           />
           <button
             ref={buttonRef}
             className='text-3xl p-2 text-white hover:text-purple-400'
             onClick={handleSend}
+            disabled={!isConnected}
           >
             <BiSend />
           </button>

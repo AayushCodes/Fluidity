@@ -105,10 +105,6 @@ const Chat = () => {
             content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function`,
           },
         ]);
-        // messages.push({
-        //   role: "system",
-        //   content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function` ,
-        // });
         if (
           chatCompletion.choices[0].message.function_call.name == 'startStream'
         ) {
@@ -172,24 +168,24 @@ const Chat = () => {
               text: `Raining some DAI on you`,
             },
           ]);
-        } else {
-          console.log(chatCompletion);
-          console.log(chatCompletion.choices[0].message.content);
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            {
-              role: 'assistant',
-              content: chatCompletion.choices[0].message.content,
-            },
-          ]);
-          setChats((prevChats) => [
-            ...prevChats,
-            {
-              is_user: false,
-              text: chatCompletion.choices[0].message.content,
-            },
-          ]);
         }
+      } else {
+        console.log(chatCompletion);
+        console.log(chatCompletion.choices[0].message.content);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            role: 'assistant',
+            content: chatCompletion.choices[0].message.content,
+          },
+        ]);
+        setChats((prevChats) => [
+          ...prevChats,
+          {
+            is_user: false,
+            text: chatCompletion.choices[0].message.content,
+          },
+        ]);
       }
     } catch (e) {
       console.log(e);

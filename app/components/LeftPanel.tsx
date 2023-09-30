@@ -19,15 +19,19 @@ const LeftPanel = () => {
       </div>
       <div className='font-mono text-md flex flex-col mb-10'>
         <p>
-          It&apos;s as easy as &ldquo;Start me a stream to 0x... for x tokens
-          per month&rdquo;
+          It&apos;s as easy as &ldquo;
+          <span className='font-bold underline'>
+            Start me a stream to 0x... for x tokens per month
+          </span>
+          &rdquo;
         </p>
         <br />
-        <p>or</p>
+        <p className='font-bold'>or</p>
         <br />
         <p>
-          Just write "let it rain over me", and we'll send you some fDAIx to get
-          you started
+          Just write "
+          <span className='font-bold underline'>let it rain over me</span>", and
+          we'll send you some fDAIx to get you started
           <br />
           (you could also ask normally but where's the fun in that?)
         </p>

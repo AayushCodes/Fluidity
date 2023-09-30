@@ -5,14 +5,14 @@ import { Divider, Image } from '@chakra-ui/react';
 const LeftPanel = () => {
   return (
     <div className='text-white rounded-lg'>
-      <div className='mb-3 font-mono text-center text-2xl'>What do we do?</div>
+      <div className='mb-3 font-mono font-semibold text-2xl'>What do we do?</div>
       <div className='font-mono text-md flex flex-col mb-10'>
         <p>
           We make managing streams as easy as texting your grandma goodnight
         </p>
       </div>
       <Divider />
-      <div className='mb-3 font-mono text-center text-2xl mt-10'>
+      <div className='mb-3 font-mono text-2xl mt-10 font-semibold'>
         How do I get started?
       </div>
       <div className='font-mono text-md flex flex-col mb-10'>

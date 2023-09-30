@@ -104,13 +104,6 @@ const Chat = () => {
             content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function`,
           },
         ]);
-        setChats((prevChats) => [
-          ...prevChats,
-          {
-            is_user: false,
-            text: `Calling ${chatCompletion.choices[0].message.function_call.name}`,
-          },
-        ]);
         // messages.push({
         //   role: "system",
         //   content: `assistant called ${chatCompletion.choices[0].message.function_call.name} function` ,
@@ -118,16 +111,30 @@ const Chat = () => {
         if (
           chatCompletion.choices[0].message.function_call.name == 'startStream'
         ) {
-          startStream(
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Approve Transaction in your wallet...`,
+            },
+          ]);
+          await startStream(
             initiated,
             functionObject.address,
             functionObject.amountPerMonth,
             functionObject.token
           );
+          setChats((prevChats) => [
+            ...prevChats,
+            {
+              is_user: false,
+              text: `Congratulations, you just started a stream for ${functionObject.amountPerMonth} ${functionObject.token} to ${functionObject.address}`,
+            },
+          ]);
         } else if (
           chatCompletion.choices[0].message.function_call.name == 'deleteStream'
         ) {
-          deleteStream(initiated, functionObject.address, functionObject.token);
+          await deleteStream(initiated, functionObject.address, functionObject.token);
         }
       } else {
         console.log(chatCompletion);
@@ -180,8 +187,8 @@ const Chat = () => {
         key={nanoid()}
         className={`${
           chat.is_user
-            ? 'ml-auto mr-2 text-lg break-normal shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-2 mt-6 rounded-xl'
-            : 'w-fit py-2 px-4 break-normal max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
+            ? 'ml-auto mr-2 text-lg break-words shadow-md max-w-md w-fit py-2 px-4 bg-cyan-600 mb-6 mt-6 rounded-xl'
+            : 'w-fit py-2 px-4 break-words max-w-sm shadow-md text-lg bg-[#7C3AED] mb-1 ml-2 rounded-xl'
         }`}
       >
         {chat.text}

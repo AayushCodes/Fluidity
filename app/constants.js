@@ -14,7 +14,9 @@ Now, I want you to call the provided list of functions if the data provided to y
 
 If the data provided by the user is inadequate, you should create a response to ask the user for what data is missing/incorrect while remembering the data that is correct for the function calls.
 
-The user might provide the information in parts and across messages, retain all the previous information given by users.`;
+The user might provide the information in parts and across messages, retain all the previous information given by users.
+
+We are also providing the user with the option to claim some tokens for testing. We have instructed them to either say something like "let it rain over me" or just they directly ask for some fDAIx or DAI tokens. In this case I want you to call the claim function call.`;
 
 export const systemFunctions = [
   {
@@ -84,5 +86,12 @@ export const systemFunctions = [
       },
       required: ["address, token, amountPerMonth"],
     },
+  },
+  {
+    name: "claim",
+    description:
+      "claim some tokens for the user to test",
+      parameters: {type: "object",
+    properties: {}}
   },
 ];

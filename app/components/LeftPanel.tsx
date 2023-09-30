@@ -25,7 +25,9 @@ const LeftPanel = () => {
         <br />
         <p>
           Just write "let it rain over me", and we'll send you some fDAIx to get
-          you started (you could also ask normally but where's the fun in that?)
+          you started 
+          <br />
+          (you could also ask normally but where's the fun in that?)
         </p>
       </div>
       <div className='justify-center font-mono text-sm text-center'>

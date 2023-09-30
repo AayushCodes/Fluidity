@@ -24,7 +24,7 @@ const UserStreams = () => {
   const { address, isConnected } = useAccount();
   const [auth, setAuth] = useState<any>();
   const [chain, setChain] = useState<any>();
-  const [streams, setStreams] = useState<any>([])
+  const [streams, setStreams] = useState<any>([]);
   useEffect(() => {
     setAuth(isConnected);
   }, [isConnected]);
@@ -66,16 +66,13 @@ const UserStreams = () => {
     }
 `;
     const data = await (
-      await fetch(
-        'https://base-goerli.subgraph.x.superfluid.dev/',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: query,
-          }),
-        }
-      )
+      await fetch('https://base-goerli.subgraph.x.superfluid.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: query,
+        }),
+      })
     ).json();
     console.log(data.data.streams.filter(checkStream));
     return data.data.streams.filter(checkStream);
@@ -85,29 +82,31 @@ const UserStreams = () => {
       if (initiated) {
         const address = initiated[3];
         console.log(address);
-        const outflows = await streamData('sender', address)
-        const inflows = await streamData('receiver', address)
+        const outflows = await streamData('sender', address);
+        const inflows = await streamData('receiver', address);
         // setOutflow(await streamData('sender', address));
         // setInflow(await streamData('receiver', address));
-        console.log(inflows)
-        console.log(outflows)
-        setStreams([...inflows, ...outflows])
+        console.log(inflows);
+        console.log(outflows);
+        setStreams([...inflows, ...outflows]);
       }
     })();
   }, [initiated]);
 
   // console.log(outflow)
   // console.log(inflow)
-  console.log(streams)
+  console.log(streams);
   const displayStreams = streams.map((stream: any, index: any) => (
     <>
       <div key={index} className='flex gap-8 p-2 justify-around m-1 rounded-lg'>
         <div>{stream.token.symbol}</div>
         {/* <div className='hover:text-purple-400 hover:cursor-pointer'> */}
         <div>
-          {stream.sender.id == address ? "-" : "+"}
-        {Math.round((stream.currentFlowRate * 30 * 24 * 60 * 60) / 1e16)/100}/mo
-            </div>
+          {stream.sender.id == address ? '-' : '+'}
+          {Math.round((stream.currentFlowRate * 30 * 24 * 60 * 60) / 1e16) /
+            100}
+          /mo
+        </div>
         {/* <Popover>
           <PopoverTrigger>
             <div className='hover:text-purple-400 hover:cursor-pointer'>
@@ -123,8 +122,10 @@ const UserStreams = () => {
             </PopoverBody>
           </PopoverContent>
         </Popover> */}
-  
-        <div>{stream.sender.id.substring(0,4)}...{stream.sender.id.substring(38)}</div>
+
+        <div>
+          {stream.sender.id.substring(0, 4)}...{stream.sender.id.substring(38)}
+        </div>
       </div>
       {streams.length - 1 === index ? null : (
         <Divider orientation='horizontal' size='lg' colorScheme='gray' />

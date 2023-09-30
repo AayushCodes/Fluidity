@@ -130,6 +130,7 @@ export async function updateStream(
   console.log(
     `You want to update your stream to ${address} for ${amountInGWeiPerMonth} ${token} per month?`
   );
+  await startStream(initiated, address, amountInGWeiPerMonth, token);
 }
 
 export async function init() {

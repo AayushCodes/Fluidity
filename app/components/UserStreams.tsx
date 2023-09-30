@@ -133,22 +133,24 @@ const UserStreams = () => {
     </>
   ));
   return (
-    <div className='text-white h-full rounded-lg'>
-      <div className='flex flex-col h-full'>
-        <div className='mb-2 font-mono text-left font-semibold text-2xl'>
-          My Streams
-        </div>
-        <div className='flex justify-between mb-2 font-mono font-semibold'>
-          <span>Asset</span>
-          <span className='mr-4'>Amount</span>
-          <span>Address</span>
-        </div>
-        <Divider orientation='horizontal' size='lg' colorScheme='gray' />
-        <div className='overflow-auto flex-col h-full'>
-          <div className='font-sans text-md'>{displayStreams}</div>
+    isConnected && (
+      <div className='text-white h-full rounded-lg'>
+        <div className='flex flex-col h-full'>
+          <div className='mb-2 font-mono text-left font-semibold text-2xl'>
+            My Streams
+          </div>
+          <div className='flex justify-between mb-2 font-mono font-semibold'>
+            <span>Asset</span>
+            <span className='mr-4'>Amount</span>
+            <span>Address</span>
+          </div>
+          <Divider orientation='horizontal' size='lg' colorScheme='gray' />
+          <div className='overflow-auto flex-col h-full'>
+            <div className='font-sans text-md'>{displayStreams}</div>
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 };
 

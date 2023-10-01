@@ -21,8 +21,26 @@ export default function Home() {
           </div>
         </div>
         <div className='flex flex-grow h-full w-1/4 justify-center'>
-          <div className='mt-8 mx-3 mr-8 w-full'>
+          <div className='mt-8 mx-3 mr-8 w-full h-5/6'>
             <UserStreams />
+            <div className='text-white text-right text-sm font-mono'>
+              Built with ❤️ by{' '}
+              <a
+                className='hover:underline hover:text-violet-500'
+                href='https://twitter.com/AayushCodes'
+              >
+                Aayush
+              </a>{' '}
+              and{' '}
+              <a
+                className='hover:underline hover:text-violet-500'
+                href='https://twitter.com/xinkin_'
+              >
+                Yash
+              </a>
+              <br />
+              (DM either for feedback)
+            </div>
           </div>
         </div>
       </div>

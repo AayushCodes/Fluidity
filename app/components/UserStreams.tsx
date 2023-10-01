@@ -25,6 +25,7 @@ const UserStreams = () => {
   const [auth, setAuth] = useState<any>();
   const [chain, setChain] = useState<any>();
   const [streams, setStreams] = useState<any>([]);
+  console.log(address)
   useEffect(() => {
     setAuth(isConnected);
   }, [isConnected]);
@@ -92,38 +93,18 @@ const UserStreams = () => {
       }
     })();
   }, [initiated]);
-
-  // console.log(outflow)
-  // console.log(inflow)
-  console.log(streams);
   const displayStreams = streams.map((stream: any, index: any) => (
     <>
       <div key={index} className='flex py-2 justify-between my-1 rounded-lg'>
         <div>{stream.token.symbol}</div>
-        {/* <div className='hover:text-purple-400 hover:cursor-pointer'> */}
         <div>
-          {stream?.sender?.id == address?.toString() ? '-' : '+'}
+          {stream?.sender?.id == address?.toLowerCase() ? '-' : '+'}
           {Math.round((stream.currentFlowRate * 30 * 24 * 60 * 60) / 1e16) /
             100}
           /mo
         </div>
-        {/* <Popover>
-          <PopoverTrigger>
-            <div className='hover:text-purple-400 hover:cursor-pointer'>
-              {stream.IOF}
-            </div>
-          </PopoverTrigger>
-          <PopoverContent className='bg-black text-sm'>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Sender/Receiver</PopoverHeader>
-            <PopoverBody>
-              <div>{stream.sr}</div>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover> */}
-
         <div>
+          {stream.sender.id == address}
           {stream.sender.id.substring(0, 4)}...{stream.sender.id.substring(38)}
         </div>
       </div>

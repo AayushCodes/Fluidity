@@ -24,14 +24,6 @@ function calculateFlow(amountInGWeiPerMonth) {
   }
 }
 
-export async function checkBalance(token, amount, address, signer) {
-  const userBalance = await token.balanceOf({
-    account: address,
-    providerOrSigner: signer,
-  });
-  return (amount >= userBalance/1e18);
-}
-
 export async function startStream(
   initiated,
   recipient,
@@ -49,8 +41,6 @@ export async function startStream(
   console.log(streamToken);
   const signer = initiated[2];
   const address = initiated[3];
-  const balance = await checkBalance(streamToken, amountInGWeiPerMonth, address, signer);
-  console.log(balance)
   try {
     const res = await streamToken.getFlow({
       sender: address,
@@ -101,14 +91,14 @@ export async function startStream(
 
 export async function deleteStream(initiated, address, token) {
   console.log(
-    `You want to delete a stream to ${address} for ${amountInGWeiPerMonth} ${token} per month?`
+    `You want to delete a stream to ${address}`
   );
   const superSigner = initiated[0];
   const streamToken = initiated[1][`f${token.toLowerCase()}x`];
   try {
     const deleteFlowOperation = streamToken.deleteFlow({
       sender: await superSigner.getAddress(),
-      receiver: recipient,
+      receiver: address,
     });
 
     console.log(deleteFlowOperation);

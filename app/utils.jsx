@@ -100,7 +100,7 @@ export async function deleteStream(initiated, address, token) {
   try {
     const deleteFlowOperation = streamToken.deleteFlow({
       sender: await superSigner.getAddress(),
-      receiver: recipient,
+      receiver: address,
     });
 
     console.log(deleteFlowOperation);

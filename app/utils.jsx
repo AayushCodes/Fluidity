@@ -41,7 +41,6 @@ export async function startStream(
   console.log(streamToken);
   const signer = initiated[2];
   const address = initiated[3];
-  const balance = await checkBalance(streamToken, amountInGWeiPerMonth, address, signer);
   console.log(balance)
   try {
     const res = await streamToken.getFlow({

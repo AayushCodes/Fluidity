@@ -3,6 +3,7 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import useChatScroll from './ChatScroll';
+import { Spinner } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
 import { BiSend } from 'react-icons/bi';
 import { systemPrompt, systemFunctions } from '../constants';
@@ -28,7 +29,7 @@ const Chat = () => {
   const [auth, setAuth] = useState<any>();
   const [initiated, setInitiated] = useState<any>();
   const [chain, setChain] = useState<Boolean>(false);
-
+  const [chatLoading, setChatLoading] = useState<Boolean>(false);
   const openai = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
@@ -194,8 +195,10 @@ const Chat = () => {
 
   async function handleSend() {
     setMessage('');
+    setChatLoading(true);
     setChats((prevChats) => [...prevChats, { is_user: true, text: message }]);
     await sendPrompt();
+    setChatLoading(false);
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -236,7 +239,14 @@ const Chat = () => {
           StreamChat
         </div> */}
         <div ref={ref} className='overflow-auto flex-col h-full'>
-          <div className='font-sans'>{displayChats}</div>
+          <div className='font-sans'>
+            {displayChats}
+            {chatLoading && (
+              <div className='text-white text-sm text-center mt-4 flex p-3 justify-center items-center gap-3'>
+                Generating <Spinner size='xs' color='violet' />
+              </div>
+            )}
+          </div>
         </div>
         <div className='flex py-2 pl-2'>
           <input

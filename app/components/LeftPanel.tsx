@@ -34,9 +34,8 @@ const LeftPanel = () => {
           (you could also ask normally but where's the fun in that?)
         </p>
       </div>
-      <div className='flex flex-col flex-wrap justify-center font-mono text-xs text-center'>
+      <div className='flex flex-col flex-wrap justify-center font-mono text-xs text-center max-w-sm'>
         <Image src={lonely} alt={'Lonely'} />
-
         <p>Your streams look empty, I can fix that</p>
       </div>
     </div>

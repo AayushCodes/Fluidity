@@ -45,15 +45,19 @@ export const ConnectBtn = () => {
               }
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type='button'>
-                    Wrong network
+                  <button
+                    className='bg-red-600 p-1.5 text-white rounded-xl font-sans'
+                    onClick={openChainModal}
+                    type='button'
+                  >
+                    Wrong Network
                   </button>
                 );
               }
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
-                    className='text-white p-1.5 rounded-2xl border-2 border-violet-600 flex items-center'
+                    className='text-white p-1.5 font-sans rounded-2xl border-2 border-violet-600 flex items-center'
                     onClick={openChainModal}
                     style={{ display: 'flex', alignItems: 'center' }}
                     type='button'

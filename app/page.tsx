@@ -7,7 +7,7 @@ import { useAccount } from 'wagmi';
 export default function Home() {
   const { address, isConnected } = useAccount();
   return (
-    <main className='bg-black h-screen'>
+    <main className='bg-black h-screen overflow-auto'>
       <Navbar />
       <div className='h-[calc(100vh-112px)] flex mt-3'>
         <div className='flex h-full w-1/4 justify-center'>

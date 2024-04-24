@@ -151,7 +151,7 @@ export async function claim(initiated) {
   const signer = initiated[2];
   const provider = initiated[4];
   const contract = new ethers.Contract(
-    '0x36a5C3EAC1C555Cbd4f04780f6bd8E978AE75631',
+    '0x76432b80a3C9d5c571aB8428bC8C3a6BAC594c75',
     abi.abi,
     signer
   );

@@ -3,24 +3,16 @@
 
 import { CacheProvider } from '@chakra-ui/next-js';
 import { ChakraProvider } from '@chakra-ui/react';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
   RainbowKitProvider,
   darkTheme,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { baseGoerli } from 'wagmi/chains';
+import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 
-const { chains, publicClient } = configureChains(
-  [baseGoerli],
-  [
-    jsonRpcProvider({ rpc: () => ({ http: 'https://goerli.base.org' }) }),
-    publicProvider(),
-  ]
-);
+const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
   projectId: '007',

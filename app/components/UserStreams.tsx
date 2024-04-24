@@ -2,7 +2,7 @@
 'use client';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
+import { sepolia, useAccount } from 'wagmi';
 import { init } from '../utils';
 import {
   Popover,
@@ -25,7 +25,7 @@ const UserStreams = () => {
   const [auth, setAuth] = useState<any>();
   const [chain, setChain] = useState<any>();
   const [streams, setStreams] = useState<any>([]);
-  console.log(address)
+  console.log(address);
   useEffect(() => {
     setAuth(isConnected);
   }, [isConnected]);
@@ -36,7 +36,7 @@ const UserStreams = () => {
         const chainId = await window.ethereum.request({
           method: 'eth_chainId',
         });
-        if (chainId == '0x14a33') {
+        if (chainId == sepolia.id) {
           setChain(true);
           setInitiated(await init());
         } else {
@@ -67,7 +67,7 @@ const UserStreams = () => {
     }
 `;
     const data = await (
-      await fetch('https://base-goerli.subgraph.x.superfluid.dev/', {
+      await fetch('https://eth-sepolia.subgraph.x.superfluid.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -22,78 +22,80 @@ Also ask the users persmission before sending any function call for anything. Ju
 
 export const systemFunctions = [
   {
-    name: "startStream",
+    name: 'startStream',
     description:
       "Start a stream from the user's address to another address specified by the user, for a specified amount of a specified token per month",
     parameters: {
-      type: "object",
+      type: 'object',
       properties: {
         address: {
-          type: "string",
-          description: "The Ethereum address to start the stream to",
+          type: 'string',
+          description: 'The Ethereum address to start the stream to',
         },
         token: {
-          type: "string",
-          description: "The token the user wants to stream",
-          enum: ["DAI", "USDC", "MATIC"],
+          type: 'string',
+          description: 'The token the user wants to stream',
+          enum: ['DAI', 'USDC', 'MATIC'],
         },
         amountPerMonth: {
-            type: "number",
-            description: "The number of the token the user wants to stream to the address per month",
-          },
+          type: 'number',
+          description:
+            'The number of the token the user wants to stream to the address per month',
+        },
       },
-      required: ["address, token, amountPerMonth"],
+      required: ['address, token, amountPerMonth'],
     },
   },
   {
-    name: "deleteStream",
+    name: 'deleteStream',
     description:
       "Delete an ongoing stream from the user's address to another address specified by the user",
     parameters: {
-      type: "object",
+      type: 'object',
       properties: {
         address: {
-          type: "string",
-          description: "The Ethereum address to which the stream to be deleted is going",
+          type: 'string',
+          description:
+            'The Ethereum address to which the stream to be deleted is going',
         },
         token: {
-          type: "string",
-          description: "The token for which the user wants to delete the stream",
-          enum: ["DAI", "USDC", "MATIC"],
+          type: 'string',
+          description:
+            'The token for which the user wants to delete the stream',
+          enum: ['DAI', 'USDC', 'MATIC'],
         },
       },
-      required: ["address, token"],
+      required: ['address, token'],
     },
   },
   {
-    name: "updateStream",
+    name: 'updateStream',
     description:
       "Update an already ongoing stream from the user's address to another address specified by the user, for a specified amount of a specified token per month",
     parameters: {
-      type: "object",
+      type: 'object',
       properties: {
         address: {
-          type: "string",
-          description: "The Ethereum address to update the stream to",
+          type: 'string',
+          description: 'The Ethereum address to update the stream to',
         },
         token: {
-          type: "string",
-          description: "The new token amount the user wants to be streamed",
-          enum: ["DAI", "USDC", "MATIC"],
+          type: 'string',
+          description: 'The new token amount the user wants to be streamed',
+          enum: ['DAI', 'USDC', 'MATIC'],
         },
         amountPerMonth: {
-            type: "number",
-            description: "The new number of the tokens the user wants to stream to the address per month",
-          },
+          type: 'number',
+          description:
+            'The new number of the tokens the user wants to stream to the address per month',
+        },
       },
-      required: ["address, token, amountPerMonth"],
+      required: ['address, token, amountPerMonth'],
     },
   },
   {
-    name: "claim",
-    description:
-      "claim some tokens for the user to test",
-      parameters: {type: "object",
-    properties: {}}
+    name: 'claim',
+    description: 'claim some tokens for the user to test',
+    parameters: { type: 'object', properties: {} },
   },
 ];

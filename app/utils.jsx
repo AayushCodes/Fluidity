@@ -1,15 +1,15 @@
-import { ethers } from "ethers";
-import { Framework } from "@superfluid-finance/sdk-core";
-import abi from "../faucet_abi.json"
+import { ethers } from 'ethers';
+import { Framework } from '@superfluid-finance/sdk-core';
+import abi from '../faucet_abi.json';
 
 function calculateFlow(amountInGWeiPerMonth) {
   if (
-    typeof Number(amountInGWeiPerMonth) !== "number" ||
+    typeof Number(amountInGWeiPerMonth) !== 'number' ||
     isNaN(Number(amountInGWeiPerMonth)) === true
   ) {
-    console.log("You can only calculate a flowRate based on a number");
+    console.log('You can only calculate a flowRate based on a number');
     return;
-  } else if (typeof Number(amountInGWeiPerMonth) === "number") {
+  } else if (typeof Number(amountInGWeiPerMonth) === 'number') {
     if (Number(amountInGWeiPerMonth) === 0) {
       return 0;
     }
@@ -55,7 +55,7 @@ export async function startStream(
         flowRate: flowRateCalc,
       });
       console.log(createFlowOperation);
-      console.log("Creating your stream...");
+      console.log('Creating your stream...');
 
       const result = await createFlowOperation.exec(superSigner);
       console.log(result);
@@ -71,7 +71,7 @@ export async function startStream(
         flowRate: flowRateCalc,
       });
       console.log(updateFlowOperation);
-      console.log("Updating your stream...");
+      console.log('Updating your stream...');
 
       const result = await updateFlowOperation.exec(superSigner);
       console.log(result);
@@ -90,9 +90,7 @@ export async function startStream(
 }
 
 export async function deleteStream(initiated, address, token) {
-  console.log(
-    `You want to delete a stream to ${address}`
-  );
+  console.log(`You want to delete a stream to ${address}`);
   const superSigner = initiated[0];
   const streamToken = initiated[1][`f${token.toLowerCase()}x`];
   try {
@@ -102,11 +100,11 @@ export async function deleteStream(initiated, address, token) {
     });
 
     console.log(deleteFlowOperation);
-    console.log("Deleting your stream...");
+    console.log('Deleting your stream...');
 
     const result = await deleteFlowOperation.exec(superSigner);
     console.log(result);
-    console.log("Congrats! You just deleted a money stream");
+    console.log('Congrats! You just deleted a money stream');
   } catch (e) {
     console.log(e);
   }
@@ -126,10 +124,11 @@ export async function updateStream(
 
 export async function init() {
   try {
+    console.log('init');
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
-    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     console.log(chainId);
     const sf = await Framework.create({
       chainId: Number(chainId),
@@ -137,10 +136,10 @@ export async function init() {
     });
     const superSigner = sf.createSigner({ signer: signer });
     console.log(await superSigner.getAddress());
-    const fDAIx = await sf.loadSuperToken("fDAIx");
+    const fDAIx = await sf.loadSuperToken('fDAIx');
     console.log(fDAIx);
-    const fTUSDx = await sf.loadSuperToken("fTUSDx");
-    const fUSDCx = await sf.loadSuperToken("fUSDCx");
+    const fTUSDx = await sf.loadSuperToken('fTUSDx');
+    const fUSDCx = await sf.loadSuperToken('fUSDCx');
     const tokens = { fdaix: fDAIx, ftusdx: fTUSDx, fusdcx: fUSDCx };
     return [superSigner, tokens, signer, address, provider];
   } catch (e) {
@@ -151,9 +150,13 @@ export async function init() {
 export async function claim(initiated) {
   const signer = initiated[2];
   const provider = initiated[4];
-  const contract = new ethers.Contract("0x36a5C3EAC1C555Cbd4f04780f6bd8E978AE75631", abi.abi, signer);
+  const contract = new ethers.Contract(
+    '0x36a5C3EAC1C555Cbd4f04780f6bd8E978AE75631',
+    abi.abi,
+    signer
+  );
   const result = await contract.requestTokens();
   console.log(result);
   await provider.waitForTransaction(result.hash);
-  console.log("claimed");
+  console.log('claimed');
 }

@@ -7,7 +7,7 @@ import { Spinner } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
 import { BiSend } from 'react-icons/bi';
 import { systemPrompt, systemFunctions } from '../constants';
-import { useAccount } from 'wagmi';
+import { sepolia, useAccount } from 'wagmi';
 import { startStream, deleteStream, updateStream, init, claim } from '../utils';
 import OpenAI from 'openai';
 require('dotenv').config();
@@ -60,7 +60,7 @@ const Chat = () => {
           method: 'eth_chainId',
         });
         console.log(chainId);
-        if (chainId == '0x14a33') {
+        if (chainId == sepolia.id) {
           setChain(true);
           setInitiated(await init());
         } else {
